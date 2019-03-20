@@ -5,7 +5,7 @@ str1: .asciiz "Enter Your Age: "
 
 wt0: .asciiz "***Welcome "
 wt1: .asciiz "! You are "
-wt2: .asciiz "years old now. Stay Blessed***"
+wt2: .asciiz " years old now. Stay Blessed***"
 
 temp0: .asciiz ""
 
