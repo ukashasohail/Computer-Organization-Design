@@ -12,7 +12,6 @@ temp0: .asciiz ""
 .text
 
 .globl main
-
 .ent main
 main:
 

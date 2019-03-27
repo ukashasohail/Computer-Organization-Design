@@ -1,10 +1,10 @@
 .data
 
-it0: .asciiz "Enter some integer value for x followed by enter: "
-it1: .asciiz "Enter some integer value for y followed by enter: "
-it2: .asciiz "Enter some integer value for z followed by enter: "
+it0: .asciiz "Enter some integer value for x followed by enter: " #string of input of x
+it1: .asciiz "Enter some integer value for y followed by enter: " #string of input of y
+it2: .asciiz "Enter some integer value for z followed by enter: " #string of input of z
 
-ot0: .asciiz "Result of x+y+z-12 is: "
+ot0: .asciiz "Result of x-y+z-12 is: " #result string
 
 .text
 
@@ -12,7 +12,7 @@ ot0: .asciiz "Result of x+y+z-12 is: "
 .ent main
 main:
 
-#displaying it0
+#displaying input x string
 li $v0,4
 la $a0,it0
 syscall
@@ -21,9 +21,9 @@ syscall
 li $v0,5
 syscall
 
-move $t0,$v0
+move $t0,$v0 #saving x to $t0
 
-#displaying it1
+#displaying input y string
 li $v0,4
 la $a0,it1
 syscall
@@ -32,26 +32,29 @@ syscall
 li $v0,5
 syscall
 
-move $t1,$v0
+move $t1,$v0 #saving y to $t1
 
-#displaying it2
+#displaying input z string
 li $v0,4
 la $a0,it2
 syscall
 
-move $t2,$v0
+#read int z
+li $v0,5
+syscall
 
-sub $t3, $t0, $t1
-addi $t4, $t2, -12
-add $t5, $t3, $t4
+move $t2,$v0 #saving z to t2
+# (x-y) + (z-12)
+sub $t3, $t0, $t1 #subtracting x and y
+addi $t4, $t2, -12 #subtracting z and 12
+add $t5, $t3, $t4 #adding the final result
 
-#printing result
-
+#printing result string
 li $v0,4
 la $a0,ot0
 syscall
 
-#print int
+#print calculated result
 li $v0,1
 move $a0, $t5
 syscall
