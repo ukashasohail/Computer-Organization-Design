@@ -1,27 +1,63 @@
 .data
 
-str0: .asciiz "Enter temperature of the day: "
-str1: .asciiz "It is hot today!"
-str2: .asciiz "Pleasant Weather"
-str3: .asciiz "It is cold today"
+it0: .asciiz "Enter marks obtained in Compplex engineering problem: "
+it1: .asciiz "What was the difficulty level of project? "
+
+ot0: .asciiz "CEP marks are: "
 
 .text
+
 .globl main
 .ent main
 main:
 
-#displaying input string
-li $v0. 4
-la $a0, str0
+#displaying input text
+li $v0, 4
+la $a0, it0
 syscall
 
-#reading integer value 
-li $v0,5
+#reading input
+li $v0, 5
 syscall
 
-#saving integer in register $0
+#storing CEP marks in $t0
 move $t0, $v0
 
-slti $t1, $t0, 30 #if $t0>30 then $t1=0
+#diplaying 2nd input text
+li $v0, 4
+la $a0, it1
+syscall
 
-bne 
+#reading input 
+li $v0, 5
+syscall
+
+#storing difficulty level in $t1
+move $t1, $v0
+
+# if t1<3,t2=1
+slti $t2, $t1, 3
+
+# if $t2 !=0t1 then target
+bne	$t2, $0, target	
+
+addi $t0, $t0, 5
+j OUT
+
+target: li $v0, 4
+la $a0, ot0
+syscall
+
+OUT: li $v0, 4
+la $a0, ot0
+syscall
+
+li $v0,1
+move $a0, $t0
+syscall
+
+li $v0, 10
+syscall
+
+jr $ra 
+.end main
