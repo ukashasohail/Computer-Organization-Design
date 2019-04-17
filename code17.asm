@@ -1,5 +1,4 @@
 .data
-
 input0: .asciiz "Enter Number: "
 output0: .asciiz "Number is Prime."
 output1: .asciiz "Number is Composite."
@@ -8,7 +7,6 @@ output1: .asciiz "Number is Composite."
 .globl main
 .ent main
 main:
-
 #displaying input string
 li $v0, 4
 la $a0, input0
@@ -18,21 +16,19 @@ syscall
 li $v0, 5
 syscall
 
-# $s0=n
 move $t1, $v0
 
-addi $t7, $0, 1
+addi $s0, $0, 1
 
 #if n=1 then it is composite
-beq $t1, $t7, composite 
+beq $t1, $s0, composite 
 
-#t1 =0
+#t0 =0
 addi $t0, $0, 0
 
 #$t2 =2
 addi $t2, $0, 2
 
-#s0/2
 div $t1,$t2
 mflo $s1
 
@@ -40,13 +36,11 @@ loop:
 
 slt $s2, $t2, $s1
 beq $s2, $0, prime 
-
 div $t1, $t2
 mfhi $t6
 
 beq $t6, $0, composite
 addi $t2, $t2, 1
-
 j loop
 
 composite:
@@ -54,7 +48,6 @@ composite:
 li $v0, 4
 la $a0,output1
 syscall
-
 j goto
 
 prime:
@@ -63,6 +56,5 @@ la $a0, output0
 syscall
 
 goto:
-
 jr $ra
 .end main
