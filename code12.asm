@@ -1,12 +1,10 @@
 .data
 
 it0: .asciiz "Enter marks obtained in Compplex engineering problem: "
-it1: .asciiz "What was the difficulty level of project? "
-
+it1: .asciiz "What wsas the difficulty level of project? "
 ot0: .asciiz "CEP marks are: "
 
 .text
-
 .globl main
 .ent main
 main:
@@ -58,6 +56,5 @@ syscall
 
 li $v0, 10
 syscall
-
 jr $ra 
 .end main
