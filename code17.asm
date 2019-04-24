@@ -1,3 +1,5 @@
+#check if number is prime or composite
+
 .data
 input0: .asciiz "Enter Number: "
 output0: .asciiz "Number is Prime."
