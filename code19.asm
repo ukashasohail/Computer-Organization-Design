@@ -1,59 +1,84 @@
 .data
 
-input0: .asciiz "enter number: "
+inpu0: .asciiz "enter number: "
 input1: .asciiz "enter power: "
+result: .asciiz "Result : "
 
 .text
 .globl main
-.ent main
 main:
 
-#input of number
+#taking input1
 li $v0, 4
-la $a0, input0
+la $a0, inpu0
 syscall
 
 li $v0, 5
 syscall
 
-# $t0 = number
-move $t0, $v0
+move $t1, $v0
 
-#input of power
+#taking input 2
 li $v0, 4
 la $a0, input1
 syscall
 
-li $v0,5
+li $v0, 5
 syscall
-
-# $t1 = power
-move $t1, $v0
-
-move $a0, $t0
-move $a1, $t1
-
-jal power
 
 move $t2, $v0
 
 
-li $v0,10
-syscall
-.end main
+move $a0, $t1
+move $a1, $t2
 
-.globl power
-.ent power
+add $a3, $0, $a0
+
+jal power
+
+add $t3, $0, $v0
+
+li $v0, 4
+la $a0, result
+syscall
+
+li $v0,1
+move $a0, $t3
+syscall
+
+li $v0, 10
+syscall
+
 power:
 
-move $s0, $a0 #number
-move $s1, $a1 #power
+addi $sp, $sp, -12
+sw $s1, 0($sp)
+sw $s2, 4($sp)
+sw $s3, 8($sp)
+
+addi $s1, $0, 1
 
 loop:
 
-mult $s0, $s0
+slt $s2, $s1, $a1
+beq $s2, $0, goto
 
+mult $a0, $a3
+mflo $a0
 
+addi $s1, $s1, 1
+j loop
 
-jr $ra
+goto:
+
+add $s3, $0, $a0
+add $v0, $0, $s3
+
+lw $s1, 0($sp)
+lw $s2, 4($sp)
+lw $s3, 8($sp)
+
+addi $sp, $sp, 12
+jr $ra 
 .end power
+
